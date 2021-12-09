@@ -18,13 +18,12 @@ const Settings = (props) => {
         <button onClick={props.newPuzzle}>Get New Puzzle</button>
       </form>
       <form id="pieces" onSubmit={e => e.preventDefault()}>
-        <input type="radio" id="number" name="piece-selection" value="number"></input>
+        <input type="radio" id="number" name="piece-selection" onClick={props.pieces} value="number"></input>
         <label htmlFor="number">Numbers</label><br></br>
-        <input type="radio" id="color" name="piece-selection" value="color"></input>
+        <input type="radio" id="color" name="piece-selection" onClick={props.pieces} value="color"></input>
         <label htmlFor="color">Colors</label><br></br>
-        <input type="radio" id="fruit" name="piece-selection" value="fruit"></input>
+        <input type="radio" id="fruit" name="piece-selection" onClick={props.pieces} value="fruit"></input>
         <label htmlFor="fruit">Fruits</label><br></br>
-        <button>Change Pieces</button>
       </form>
     </div>
   );

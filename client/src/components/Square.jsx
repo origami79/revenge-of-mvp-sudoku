@@ -1,11 +1,6 @@
 import React from 'react';
 
-const pieceSets = {
-  number: [],
-  color: [],
-  fruit: [],
-  animal: []
-};
+import pieces from './Pieces.jsx';
 
 const squareAssignment = [
   [1, 1, 1, 2, 2, 2, 3, 3, 3],
@@ -27,8 +22,9 @@ class Square extends React.Component {
     const squareNum = 'square' + squareAssignment[this.props.row][this.props.col];
     const coords = rowNum + colNum;
 
-    // let piece = pieceSets[this.props.pieces][this.props.square];
-    let piece = <div className="piece">{this.props.square.value}</div>
+    const value = this.props.square.value;
+    // let piece = pieces['color'][this.props.square.value];
+    let piece = pieces[this.props.pieces][this.props.square.value];
 
     if (this.props.square.changeable === true) {
       return (

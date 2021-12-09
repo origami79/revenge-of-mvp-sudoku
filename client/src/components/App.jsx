@@ -29,14 +29,29 @@ class App extends React.Component {
     this.checkSolution = this.checkSolution.bind(this);
     this.getGame = this.getGame.bind(this);
     this.changeDifficulty = this.changeDifficulty.bind(this);
+    this.changePieces = this.changePieces.bind(this);
   }
 
   componentDidMount() {
     this.getGame();
   }
 
+  componentDidUpdate() {
+    let classList = document.body.classList;
+    if (this.state.pieces === 'fruit') {
+      if (classList.length === 0) {
+        $('body').toggleClass('fruitmode');
+      }
+    } else {
+      if (classList.length === 1) {
+        $('body').toggleClass('fruitmode');
+      }
+    }
+  }
+
   // function to retrieve games from API
   getGame() {
+    $('#banner').text('');
     const options = {
       method: 'GET',
       url: `/newGame?difficulty=${this.state.difficulty}`,
@@ -67,13 +82,12 @@ class App extends React.Component {
     if (rows === false || cols === false || squares === false) {
       solved = false;
     }
-
     if (solved === true) {
       // do something
-      console.log('SOLVED');
+      $('#banner').text('Congrats! You did it! Play again?');
     } else {
       // do something else
-      console.log('Not Yet...');
+      $('#banner').text('Whoops, you don\'t quite have it right...');
     }
   }
 
@@ -174,8 +188,10 @@ class App extends React.Component {
   }
 
   //function to change piece set
-  changePieces() {
-
+  changePieces(e) {
+    let pieceStyle = e.target.attributes.id.value;
+    console.log('CLICKED', pieceStyle);
+    this.setState({pieces: pieceStyle});
   }
 
   // functions to set a piece
@@ -205,9 +221,12 @@ class App extends React.Component {
   render() {
     return (
       <div id="App">
-        <h1>Sudoku</h1>
+        <div id="info">
+          <h1 id="title">Sudoku</h1>
+          <h3 id="banner"></h3>
+        </div>
         <Board board={this.state.board} pieces={this.state.pieces}  pieceClick={this.cycleChoices} />
-        <Settings solved={this.checkSolution} newPuzzle={this.getGame} difficulty={this.changeDifficulty} />
+        <Settings solved={this.checkSolution} newPuzzle={this.getGame} difficulty={this.changeDifficulty} pieces={this.changePieces} />
       </div>
     )
   }
