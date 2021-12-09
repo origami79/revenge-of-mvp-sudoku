@@ -9,7 +9,7 @@ class Row extends React.Component {
     return (
       <span id={rowNum} className="row">
         {this.props.rowData.map((square, index) => {
-          return <Square key={index} square={square} row={this.props.row} col={index} pieces={this.props.pieces} />
+          return <Square key={index} square={square} row={this.props.row} col={index} pieces={this.props.pieces} pieceClick={this.props.pieceClick} />
         })}
       </span>
     )

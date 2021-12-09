@@ -6,16 +6,16 @@ const Settings = (props) => {
   return (
     <div id="Settings">
       <h2>Settings</h2>
-      <button>Check Solution</button>
+      <button onClick={props.solved}>Check Solution</button>
       <button>Hint</button>
       <form id="new-game" onSubmit={e => e.preventDefault()}>
-        <input type="radio" id="easy" name="difficulty" value="easy"></input>
+        <input type="radio" id="easy" name="difficulty" onClick={props.difficulty} value="easy"></input>
         <label htmlFor="easy">Easy</label><br></br>
-        <input type="radio" id="medium" name="difficulty" value="medium"></input>
+        <input type="radio" id="medium" name="difficulty" onClick={props.difficulty} value="medium"></input>
         <label htmlFor="medium">Medium</label><br></br>
-        <input type="radio" id="hard" name="difficulty" value="hard"></input>
+        <input type="radio" id="hard" name="difficulty" onClick={props.difficulty} value="hard"></input>
         <label htmlFor="hard">Hard</label><br></br>
-        <button>Get New Puzzle</button>
+        <button onClick={props.newPuzzle}>Get New Puzzle</button>
       </form>
       <form id="pieces" onSubmit={e => e.preventDefault()}>
         <input type="radio" id="number" name="piece-selection" value="number"></input>

@@ -28,15 +28,27 @@ class Square extends React.Component {
     const coords = rowNum + colNum;
 
     // let piece = pieceSets[this.props.pieces][this.props.square];
-    let piece = <span className="piece">0</span>
+    let piece = <div className="piece">{this.props.square.value}</div>
 
-    return (
-      <span id={coords} className={`${rowNum} ${colNum} ${squareNum} square`}>
-        <span id={`inner${coords}`} className={`${rowNum} ${colNum} ${squareNum} inner-square`}>
-        {piece}
-        </span>
-      </span>
-    )
+    if (this.props.square.changeable === true) {
+      return (
+        <div className={`${rowNum} ${colNum} ${squareNum} square changeable`} onClick={this.props.pieceClick}>
+          <div id={coords} className={`${rowNum} ${colNum} ${squareNum} inner-square`}>
+            {piece}
+          </div>
+      </div>
+      )
+    } else {
+
+      return (
+        <div className={`${rowNum} ${colNum} ${squareNum} square preset`} >
+          <div id={coords} className={`${rowNum} ${colNum} ${squareNum} inner-square`}>
+            {piece}
+          </div>
+        </div>
+      )
+    }
+
   }
 };
 
