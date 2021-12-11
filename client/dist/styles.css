@@ -104,11 +104,11 @@ form {
   font-size: 5vw;
 }
 
-.square1, .square3, .square5, .square7, .square9 {
+.square0, .square2, .square4, .square6, .square8 {
   background: #d19d71;
 }
 
-.square2, .square4, .square6, .square8 {
+.square1, .square3, .square5, .square7 {
   background: #e4cc9f;
 }
 
@@ -123,7 +123,7 @@ form {
   padding-bottom: 1vw;
 }
 
-.changeable .number.zeo {
+.changeable .number.zero {
   border: none
 
 }
@@ -180,18 +180,22 @@ form {
   padding: 0;
 }
 
-.square1 .fruit, .square3 .fruit, .square5 .fruit, .square7 .fruit, .square9 .fruit {
+.square0 .fruit, .square2 .fruit, .square4 .fruit, .square6 .fruit, .square8 .fruit {
   background: #ff0063;
 }
 
-.square1.changeable .fruit, .square3.changeable .fruit, .square5.changeable .fruit, .square7.changeable .fruit, .square9.changeable .fruit {
+.square0.changeable .fruit, .square2.changeable .fruit, .square4.changeable .fruit, .square6.changeable .fruit, .square8.changeable .fruit {
   background: #ff468d;
 }
 
-.square2 .fruit, .square4 .fruit, .square6 .fruit, .square8 .fruit {
+.square1 .fruit, .square3 .fruit, .square5 .fruit, .square7 .fruit {
   background: #df9600;
 }
 
-.square2.changeable .fruit, .square4.changeable .fruit, .square6.changeable .fruit, .square8.changeable .fruit {
+.square1.changeable .fruit, .square3.changeable .fruit, .square5.changeable .fruit, .square7.changeable .fruit {
   background: #ecb341;
+}
+
+.highlight {
+  border: white solid 2px;
 }

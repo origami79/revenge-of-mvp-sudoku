@@ -24,12 +24,15 @@ class App extends React.Component {
       ],
       pieces: 'number',
       difficulty: 'easy',
+      hint: false,
+      highlights: [],
     };
     this.cycleChoices = this.cycleChoices.bind(this);
     this.checkSolution = this.checkSolution.bind(this);
     this.getGame = this.getGame.bind(this);
     this.changeDifficulty = this.changeDifficulty.bind(this);
     this.changePieces = this.changePieces.bind(this);
+    this.giveHint = this.giveHint.bind(this);
   }
 
   componentDidMount() {
@@ -46,6 +49,17 @@ class App extends React.Component {
       if (classList.length === 1) {
         $('body').toggleClass('fruitmode');
       }
+    }
+    if (this.state.highlights.length > 0) {
+      const highlights = this.state.highlights;
+      for (let i = 0; i < highlights.length; i++) {
+        console.log('current highlight', highlights[i]);
+        // turn on hightlights
+        $(`.${highlights[i]}`).toggleClass('highlight');
+      }
+    }
+    if(this.state.hint === false) {
+      $('.highlight').removeClass('highlight');
     }
   }
 
@@ -76,9 +90,9 @@ class App extends React.Component {
   checkSolution() {
     const currentBoard = this.state.board;
     let solved = true;
-    let rows = this.checkRows();
-    let cols = this.checkCols();
-    let squares = this.checkSquares();
+    let rows = this.checkRows(this.checkMatrix);
+    let cols = this.checkCols(this.checkMatrix);
+    let squares = this.checkSquares(this.checkMatrix);
     if (rows === false || cols === false || squares === false) {
       solved = false;
     }
@@ -106,8 +120,8 @@ class App extends React.Component {
         8: 0,
         9: 0
       }
-      for (let i = 0; i < row.length; i++) {
-        const square = row[i];
+      for (let j = 0; j < row.length; j++) {
+        const square = row[j];
         counter[square]++;
       }
       if (counter[1] !== 1 || counter[2] !== 1 ||  counter[3] !== 1 ||
@@ -119,7 +133,7 @@ class App extends React.Component {
     return solved;
   }
 
-  checkRows() {
+  checkRows(cb) {
     let matrix = [[], [], [], [], [], [], [], [], []];
     let board = this.state.board;
     for (let i = 0; i < board.length; i++) {
@@ -129,12 +143,12 @@ class App extends React.Component {
         matrix[i].push(squareVal);
       }
     }
-    let solved = this.checkMatrix(matrix);
-    console.log('ROW', solved);
+    let solved = cb(matrix);
+    //console.log('ROW', solved);
     return solved;
   }
 
-  checkCols() {
+  checkCols(cb) {
     let matrix = [[], [], [], [], [], [], [], [], []];
     let board = this.state.board;
     for (let i = 0; i < board.length; i++) {
@@ -144,12 +158,12 @@ class App extends React.Component {
         matrix[i].push(squareVal);
       }
     }
-    let solved = this.checkMatrix(matrix);
-    console.log('COL', solved);
+    let solved = cb(matrix);
+    //console.log('COL', solved);
     return solved;
   }
 
-  checkSquares() {
+  checkSquares(cb) {
     let matrix = [[], [], [], [], [], [], [], [], []];
     const board = this.state.board;
     for (let i = 0; i <board.length; i++) {
@@ -177,14 +191,89 @@ class App extends React.Component {
         }
       }
     }
-    let solved = this.checkMatrix(matrix);
-    console.log('SQUARES', solved);
+    let solved = cb(matrix);
+    //console.log('SQUARES', solved);
     return solved;
+  }
+
+  storeConflicts(matrix) {
+    let conflicts = [];
+    for (let i = 0; i <matrix.length; i++) {
+      const row = matrix[i];
+      let counter = {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+        6: 0,
+        7: 0,
+        8: 0,
+        9: 0
+      }
+      for (let j = 0; j < row.length; j++) {
+        const square = row[j];
+        counter[square]++;
+      }
+      if (counter[1] !== 1 || counter[2] !== 1 ||  counter[3] !== 1 ||
+        counter[6] !== 1 || counter[5] !== 1 || counter[4] !== 1 ||
+        counter[7] !== 1 || counter[8] !== 1 || counter[9] !== 1) {
+          conflicts.push(i)
+      }
+    }
+    return conflicts;
   }
 
   // function to provide hint
   giveHint() {
-
+    // if no hint active:
+    if (this.state.hint === false) {
+      let conflicts = {};
+      // find all rows/cols/square with conflicts
+      if (this.checkRows(this.checkMatrix) === false) {
+        // store conflicts
+        conflicts.rows = this.checkRows(this.storeConflicts);
+      }
+      if (this.checkCols(this.checkMatrix) === false) {
+        // store conflicts
+        conflicts.cols = this.checkCols(this.storeConflicts);
+      }
+      if (this.checkSquares(this.checkMatrix) === false) {
+        // store conflicts
+        conflicts.squares = this.checkSquares(this.storeConflicts);
+      }
+      // depending on difficulty, pick a percentage of those conflicts
+      let skip;
+      if (this.state.difficulty === 'easy' || this.state.difficulty === 'Easy') {
+        skip = 1;
+      } else if (this.state.difficulty === 'medium' || this.state.difficulty === 'Medium') {
+        skip = 2;
+      } else {
+        skip = 5;
+      }
+      let chosenConflicts = [];
+      if (conflicts.rows !== undefined) {
+        for (let i = 0; i < conflicts.rows.length; i += skip) {
+          chosenConflicts.push('row' + conflicts.rows[i]);
+        }
+      }
+      if (conflicts.cols !== undefined) {
+        for (let i = 0; i < conflicts.cols.length; i += skip) {
+          chosenConflicts.push('col' + conflicts.cols[i]);
+        }
+      }
+      if (conflicts.squares !== undefined) {
+        for (let i = 0; i < conflicts.squares.length; i += skip) {
+          chosenConflicts.push('square' + conflicts.squares[i]);
+        }
+      }
+      console.log('CONFLICTS', chosenConflicts);
+      this.setState({hint: true, highlights: chosenConflicts})
+      //if hint is already active:
+    } else {
+      this.setState({hint: false, highlights: []})
+      // turn off highlights
+    }
   }
 
   //function to change piece set
@@ -226,7 +315,7 @@ class App extends React.Component {
           <h3 id="banner"></h3>
         </div>
         <Board board={this.state.board} pieces={this.state.pieces}  pieceClick={this.cycleChoices} />
-        <Settings solved={this.checkSolution} newPuzzle={this.getGame} difficulty={this.changeDifficulty} pieces={this.changePieces} />
+        <Settings solved={this.checkSolution} newPuzzle={this.getGame} difficulty={this.changeDifficulty} pieces={this.changePieces} hint={this.giveHint} />
       </div>
     )
   }

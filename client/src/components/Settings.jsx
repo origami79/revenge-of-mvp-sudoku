@@ -8,7 +8,7 @@ const Settings = (props) => {
       <h2>Settings</h2>
       <form id="other-settings" onSubmit={e => e.preventDefault()}>
       <button onClick={props.solved}>Check Solution</button>
-      <button>Hint</button>
+      <button onClick={props.hint}>Hint</button>
       </form>
       <form id="new-game" onSubmit={e => e.preventDefault()}>
         <h3>New Puzzle</h3>
