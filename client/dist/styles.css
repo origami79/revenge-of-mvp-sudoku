@@ -1,0 +1,197 @@
+body {
+  background: #ece6c3;
+  font-family: 'Merienda', cursive;
+}
+
+h1, h2, h3 {
+  font-weight: bold;
+}
+
+#App {
+  height: 100vw;
+  width: 100vw;
+  text-align: center;
+}
+
+body.fruitmode {
+  background: #97d896;
+}
+
+#Settings {
+  background: #e4cc9f;
+  margin: 10%;
+  border: black solid 3px;
+  border-radius: 25%;
+  padding: auto;
+}
+
+.fruitmode #Settings {
+  background: #df9600
+}
+
+#Settings button {
+  font-family: 'Merienda', cursive;
+  background: #d19d71;
+  border-radius: 50%;
+  width: 130px;
+  height: 75px;
+  margin: 10px;
+}
+
+.fruitmode #Settings button {
+  background: #ff0063;
+}
+
+form {
+  margin: 5%;
+}
+
+#Board {
+  width: 75%;
+  padding-bottom: 75%;
+  margin: auto;
+  position: relative;
+}
+
+#inner-board {
+  max-height: 100%;;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+#row0 {
+  grid-row-start: 1;
+  grid-row-end: 0;
+}
+
+.square {
+  font-family: 'Knewave', cursive;
+  border: black solid 1px;
+  margin: 0;
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.inner-square {
+  position: absolute;
+  display: block;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  height: auto;
+}
+
+.piece {
+  display: block;
+  margin-top: 5%;
+  padding: auto;
+  text-align: center;
+}
+
+.square {
+  font-size: 5vw;
+}
+
+.square1, .square3, .square5, .square7, .square9 {
+  background: #d19d71;
+}
+
+.square2, .square4, .square6, .square8 {
+  background: #e4cc9f;
+}
+
+.changeable .number {
+  border: black solid 2px;
+  border-radius: 50%;
+  border-radius: 50%;
+  height: 75%;
+  width: 80%;
+  margin-top: 0.5vw;
+  margin-left: 0.1vw;
+  padding-bottom: 1vw;
+}
+
+.changeable .number.zeo {
+  border: none
+
+}
+
+.color {
+  border: black solid 2px;
+  border-radius: 50%;
+  height: 75%;
+  width: 80%;
+  margin-top: 0.5vw;
+  margin-left: 0.1vw;
+}
+
+.changeable .color {
+  border: white solid 2px;
+}
+
+.changeable .zero {
+  border: none;
+}
+
+.color.one {
+  background: red;
+}
+.color.two {
+  background: orange;
+}
+.color.three {
+  background: yellow;
+}
+.color.four {
+  background: green;
+}
+.color.five {
+  background: rgb(120, 217, 241);
+}
+.color.six {
+  background: blue;
+}
+.color.seven {
+  background: rgb(151, 35, 187);
+}
+.color.eight {
+  background: rgb(56, 42, 14);
+}
+.color.nine {
+  background: rgb(238, 151, 199);
+}
+
+.fruit {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.square1 .fruit, .square3 .fruit, .square5 .fruit, .square7 .fruit, .square9 .fruit {
+  background: #ff0063;
+}
+
+.square1.changeable .fruit, .square3.changeable .fruit, .square5.changeable .fruit, .square7.changeable .fruit, .square9.changeable .fruit {
+  background: #ff468d;
+}
+
+.square2 .fruit, .square4 .fruit, .square6 .fruit, .square8 .fruit {
+  background: #df9600;
+}
+
+.square2.changeable .fruit, .square4.changeable .fruit, .square6.changeable .fruit, .square8.changeable .fruit {
+  background: #ecb341;
+}
